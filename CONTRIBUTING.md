@@ -2,33 +2,39 @@
 
 ## Branch
 
-| Branch      | Fungsi                                  |
-|-------------|-----------------------------------------|
-| `main`      | Kode production, hanya menerima merge dari `develop` atau `hotfix/*` |
-| `develop`   | Integrasi fitur sebelum rilis           |
-| `feature/*` | Fitur baru, dibuat dari `develop`       |
-| `bugfix/*`  | Perbaikan bug, dibuat dari `develop`    |
-| `hotfix/*`  | Perbaikan darurat, dibuat dari `main`   |
+| Branch      | Fungsi                                          |
+|-------------|-------------------------------------------------|
+| `main`      | Kode stabil yang siap digunakan                 |
+| `develop`   | Integrasi fitur sebelum dirilis ke `main`       |
+| `feature/*` | Pengembangan fitur baru, dibuat dari `develop`  |
+| `bugfix/*`  | Perbaikan bug, dibuat dari `develop`            |
+| `hotfix/*`  | Perbaikan mendesak, dibuat dari `main`          |
 
-Contoh nama branch: `feature/be-check-in-api`, `feature/fe-login-page`, `bugfix/fe-date-format`.
+Contoh penamaan: `feature/be-check-in-api`, `feature/fe-login-page`, `bugfix/fe-date-format`.
 
 ## Alur Kerja
 
-1. `git checkout develop && git pull`
-2. `git checkout -b feature/nama-fitur`
+1. Perbarui branch `develop`
+   ```bash
+   git checkout develop
+   git pull
+   ```
+2. Buat branch baru
+   ```bash
+   git checkout -b feature/nama-fitur
+   ```
 3. Commit perubahan
-4. Push dan buat Pull Request ke `develop`
-5. Merge setelah review dan CI lulus
+4. Push branch dan buat Pull Request dengan base `develop`
 
 ## Format Commit
 
-Menggunakan [Conventional Commits](https://www.conventionalcommits.org/):
+Mengikuti standar [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
 <type>(<scope>): <deskripsi>
 ```
 
-- **type:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`
+- **type:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 - **scope:** `fe`, `be`, `db`, `docs`
 
 Contoh:
@@ -38,8 +44,7 @@ feat(be): add check-in endpoint
 fix(fe): correct attendance date format
 ```
 
-## Aturan Kode
+## Standar Kode
 
-- Tidak menambahkan komentar di dalam kode; gunakan penamaan yang jelas
-- Backend: `./gradlew build` harus lulus
-- Frontend: `npm run lint` dan `npm run build` harus lulus
+- Gunakan penamaan yang jelas dan deskriptif
+- Hindari komentar di dalam kode

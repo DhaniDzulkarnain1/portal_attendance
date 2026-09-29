@@ -7,7 +7,6 @@ REST API Portal Attendance menggunakan Kotlin Spring Boot.
 - Kotlin
 - Spring Boot
 - Spring Data JPA (Hibernate)
-- Flyway
 - PostgreSQL
 
 ## Struktur Folder
@@ -25,13 +24,21 @@ src/main/kotlin/com/portalattendance/
 └── service/
 
 src/main/resources/
-├── application.yml
-└── db/migration/
+└── application.yml
+
+database/
+└── schema.sql
+```
+
+## Database
+
+Buat database `portal_attendance`, lalu jalankan `database/schema.sql` melalui DBeaver atau psql:
+
+```bash
+psql -U postgres -d portal_attendance -f database/schema.sql
 ```
 
 ## Menjalankan
-
-Buat database `portal_attendance` di PostgreSQL, lalu:
 
 ```bash
 ./gradlew bootRun

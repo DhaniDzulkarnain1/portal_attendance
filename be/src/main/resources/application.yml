@@ -17,3 +17,8 @@ server:
   port: 8080
   servlet:
     context-path: /api
+
+app:
+  invitation:
+    base-url: ${INVITATION_BASE_URL:http://localhost:3000/invitation}
+    capacity: ${INVITATION_CAPACITY:990}

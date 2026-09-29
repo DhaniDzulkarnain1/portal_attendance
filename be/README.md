@@ -52,6 +52,8 @@ Windows:
 
 API berjalan di `http://localhost:8080/api`.
 
+Dokumentasi dan pengujian API melalui Scalar: `http://localhost:8080/api/scalar`.
+
 ## Konfigurasi Database
 
 | Variable      | Default                                              |

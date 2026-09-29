@@ -27,9 +27,6 @@ class Invitation(
 	@Column(name = "confirmation_status", nullable = false, columnDefinition = "confirmation_status_enum")
 	var confirmationStatus: ConfirmationStatus = ConfirmationStatus.PENDING,
 
-	@Column(name = "seat_id", length = 50)
-	var seatId: String? = null,
-
 	@Column(name = "confirmed_at")
 	var confirmedAt: OffsetDateTime? = null,
 

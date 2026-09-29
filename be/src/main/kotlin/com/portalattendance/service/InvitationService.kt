@@ -4,6 +4,7 @@ import com.portalattendance.config.InvitationProperties
 import com.portalattendance.dto.request.ConfirmAttendanceRequest
 import com.portalattendance.dto.request.CreateInvitationRequest
 import com.portalattendance.dto.response.InvitationResponse
+import com.portalattendance.dto.response.QuotaResponse
 import com.portalattendance.entity.ConfirmationStatus
 import com.portalattendance.entity.Invitation
 import com.portalattendance.exception.ConflictException
@@ -32,9 +33,7 @@ class InvitationService(
 		if (invitationRepository.existsByUserId(requireNotNull(user.id))) {
 			throw ConflictException("Undangan untuk BADGE $badgeId sudah dibuat")
 		}
-		val invitation = invitationRepository.save(
-			Invitation(user = user, seatId = request.seatId?.trim()),
-		)
+		val invitation = invitationRepository.save(Invitation(user = user))
 		return toResponse(invitation)
 	}
 
@@ -52,10 +51,24 @@ class InvitationService(
 		if (invitation.confirmationStatus != ConfirmationStatus.PENDING) {
 			throw ConflictException("Undangan sudah dikonfirmasi dengan status ${invitation.confirmationStatus}")
 		}
-		invitation.confirmationStatus =
-			if (request.attending == true) ConfirmationStatus.HADIR else ConfirmationStatus.TIDAK_HADIR
+		val attending = request.attending == true
+		if (attending && getQuota().remaining <= 0) {
+			throw ConflictException("Kuota penuh, konfirmasi kehadiran tidak dapat diproses")
+		}
+		invitation.confirmationStatus = if (attending) ConfirmationStatus.HADIR else ConfirmationStatus.TIDAK_HADIR
 		invitation.confirmedAt = OffsetDateTime.now()
 		return toResponse(invitation)
+	}
+
+	@Transactional(readOnly = true)
+	fun getQuota(): QuotaResponse {
+		val capacity = invitationProperties.capacity
+		val confirmed = invitationRepository.countByConfirmationStatus(ConfirmationStatus.HADIR)
+		return QuotaResponse(
+			capacity = capacity,
+			confirmed = confirmed,
+			remaining = (capacity - confirmed).coerceAtLeast(0),
+		)
 	}
 
 	@Transactional(readOnly = true)

@@ -7,7 +7,4 @@ data class CreateInvitationRequest(
 	@field:NotBlank
 	@field:Size(max = 50)
 	val badgeId: String,
-
-	@field:Size(max = 50)
-	val seatId: String? = null,
 )

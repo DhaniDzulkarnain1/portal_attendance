@@ -21,3 +21,4 @@ server:
 app:
   invitation:
     base-url: ${INVITATION_BASE_URL:http://localhost:3000/invitation}
+    capacity: ${INVITATION_CAPACITY:990}

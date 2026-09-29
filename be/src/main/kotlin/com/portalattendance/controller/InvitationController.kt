@@ -4,6 +4,7 @@ import com.portalattendance.dto.request.ConfirmAttendanceRequest
 import com.portalattendance.dto.request.CreateInvitationRequest
 import com.portalattendance.dto.response.ApiResponse
 import com.portalattendance.dto.response.InvitationResponse
+import com.portalattendance.dto.response.QuotaResponse
 import com.portalattendance.service.InvitationService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -35,6 +36,11 @@ class InvitationController(
 	@Operation(summary = "Daftar undangan")
 	fun findAll(): ApiResponse<List<InvitationResponse>> =
 		ApiResponse.success("Daftar undangan", invitationService.findAll())
+
+	@GetMapping("/quota")
+	@Operation(summary = "Sisa kuota kehadiran")
+	fun quota(): ApiResponse<QuotaResponse> =
+		ApiResponse.success("Sisa kuota kehadiran", invitationService.getQuota())
 
 	@GetMapping("/{badgeId}")
 	@Operation(summary = "Buka undangan berdasarkan BADGE")

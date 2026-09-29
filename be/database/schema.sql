@@ -23,7 +23,6 @@ CREATE TABLE public.invitations (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
     confirmation_status public.confirmation_status_enum DEFAULT 'PENDING'::public.confirmation_status_enum NOT NULL,
-    seat_id character varying(50),
     confirmed_at timestamp with time zone,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
